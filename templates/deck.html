@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruptores — Seleção de Deck</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="deck-body">
+
+  <div class="aviso-energia" id="aviso-energia">
+    ⚡ Energia insuficiente! Máximo é 10.
+  </div>
+
+  <div class="deck-header">
+    <h2 class="deck-titulo">Escolha seu Deck</h2>
+    <div class="energia-bar">
+      <span>⚡ Energia: </span>
+      <span id="energia-atual">0</span>
+      <span> / 10</span>
+    </div>
+  </div>
+
+  <div class="cartas-grid">
+    {% for carta in cartas %}
+    <div class="carta" data-id="{{ carta.id }}" data-custo="{{ carta.custo }}" onclick="selecionarCarta(this)">
+      <div class="carta-topo">
+        <span class="carta-nome">{{ carta.nome }}</span>
+        <span class="carta-classe">{{ carta.classificacao }}</span>
+      </div>
+      <div class="carta-foto">
+        <img src="{{ url_for('static', filename='img/' + carta.nome|lower|replace(' ', '_')|replace('.', '') + '.png') }}"
+             alt="{{ carta.nome }}"
+             onerror="this.style.display='none'"
+             class="carta-img">
+        <span class="carta-codinome">{{ carta.codinome }}</span>
+      </div>
+      <div class="carta-stats">
+        <span>⭐ {{ carta.custo }}</span>
+        <span>❤️ {{ carta.vida }}</span>
+        <span>⚔️ {{ carta.dano }}</span>
+      </div>
+      <div class="carta-descricao">{{ carta.efeito }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="deck-footer">
+    <button class="confirmar-botao" onclick="confirmarDeck()">Confirmar Deck</button>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/deck.js') }}"></script>
+</body>
+</html>

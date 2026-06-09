@@ -51,3 +51,197 @@
 .menu-botao-img:hover {
   transform: scale(1.05);
 }
+
+/* ===== TELA 2 — DECK ===== */
+.deck-body {
+  background-image: url('../img/fundo_deck.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Georgia, serif;
+}
+
+.deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 0 10px;
+}
+
+.deck-titulo {
+  color: #f0c040;
+  font-size: 28px;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px #f0a000;
+}
+
+.energia-bar {
+  background-color: #0d0d1a;
+  color: #f0c040;
+  font-size: 18px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 2px solid #f0c040;
+}
+
+.cartas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.carta {
+  background-color: rgba(13, 13, 26, 0.9);
+  border: 2px solid #8b6914;
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.carta:hover {
+  transform: scale(1.03);
+  border-color: #f0c040;
+  box-shadow: 0 0 16px rgba(240, 160, 0, 0.4);
+}
+
+.carta.selecionada {
+  border-color: #f0c040;
+  box-shadow: 0 0 20px rgba(240, 160, 0, 0.7);
+  background-color: rgba(26, 21, 0, 0.95);
+}
+
+.carta-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.carta-nome {
+  color: #f0c040;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.carta-classe {
+  background-color: #2a6e2a;
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.carta-foto {
+  position: relative;
+  height: 120px;
+  background-color: #111;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 1px solid #333;
+  overflow: hidden;
+}
+
+.carta-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.carta-codinome {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #f0c040;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-shadow: 0 0 6px #000, 0 0 6px #000;
+}
+
+.carta-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 8px;
+  color: #ddd;
+  font-size: 13px;
+}
+
+.carta-efeito {
+  color: #aaa;
+  font-size: 12px;
+  font-style: italic;
+  text-align: center;
+  border-top: 1px solid #333;
+  padding-top: 8px;
+}
+
+.carta-descricao {
+  color: #bbb;
+  font-size: 11px;
+  text-align: center;
+  margin-top: 6px;
+  line-height: 1.4;
+  border-top: 1px solid #333;
+  padding-top: 6px;
+  display: none;
+}
+
+.carta:hover .carta-descricao {
+  display: block;
+}
+
+.deck-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  padding-bottom: 30px;
+}
+
+.confirmar-botao {
+  background: linear-gradient(135deg, #b8860b, #f0c040, #b8860b);
+  color: #1a1a1a;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: Georgia, serif;
+  padding: 14px 48px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 20px rgba(240, 160, 0, 0.5);
+  transition: transform 0.2s;
+}
+
+.confirmar-botao:hover {
+  transform: scale(1.05);
+}
+
+/* ===== AVISO DE ENERGIA ===== */
+.aviso-energia {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #7a0000;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: 2px solid #ff4444;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  z-index: 999;
+  text-align: center;
+}
