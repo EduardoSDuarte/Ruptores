@@ -8,6 +8,10 @@ def carregar_cartas():
     with open("data/cartas.json", "r", encoding="utf-8") as f:
         return json.load(f)
 
+def carregar_mapa():
+    with open("data/mapa.json", "r", encoding="utf-8") as f:
+        return json.load(f)
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -29,6 +33,17 @@ def confirmar_deck():
 @app.route("/mapa")
 def mapa():
     return render_template("mapa.html")
+
+@app.route("/confirmar_rota", methods=["POST"])
+def confirmar_rota():
+    data = request.get_json()
+    rota_jogador = data.get("rota", [])
+    session["rota_jogador"] = rota_jogador
+    return jsonify({"status": "ok"})
+
+@app.route("/batalha")
+def batalha():
+    return render_template("batalha.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

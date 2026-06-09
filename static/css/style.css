@@ -245,3 +245,79 @@
   z-index: 999;
   text-align: center;
 }
+
+/* ===== TELA 3 — MAPA ===== */
+.mapa-body {
+  background-image: url('../img/fundo_mapa.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Georgia, serif;
+}
+
+.mapa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.mapa-titulo {
+  color: #f0c040;
+  font-size: 28px;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px #f0a000;
+}
+
+.custo-bar {
+  background-color: #0d0d1a;
+  color: #f0c040;
+  font-size: 18px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 2px solid #f0c040;
+}
+
+.mapa-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: rgba(13, 13, 26, 0.8);
+  border-radius: 16px;
+  border: 2px solid #8b6914;
+  padding: 10px;
+}
+
+#mapa-svg {
+  width: 100%;
+  height: auto;
+}
+
+.sala {
+  cursor: pointer;
+  transition: fill 0.2s;
+}
+
+.sala:hover {
+  fill: #2a2000;
+}
+
+.rota-display {
+  max-width: 800px;
+  margin: 16px auto;
+  background-color: rgba(13, 13, 26, 0.9);
+  border: 2px solid #8b6914;
+  border-radius: 8px;
+  padding: 12px 24px;
+  color: #f0c040;
+  font-size: 16px;
+  text-align: center;
+}
+
+.mapa-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding-bottom: 30px;
+}
