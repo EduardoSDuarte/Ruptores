@@ -4,11 +4,10 @@ def held_karp(distancias, salas):
     n = len(salas)
     INF = float('inf')
 
-    # dp[mascara][i] = menor custo para chegar em i visitando as salas na mascara
     dp = [[INF] * n for _ in range(1 << n)]
     pai = [[-1] * n for _ in range(1 << n)]
 
-    dp[1][0] = 0  # começa na sala 0 (entrada)
+    dp[1][0] = 0
 
     for mascara in range(1 << n):
         for u in range(n):
@@ -34,7 +33,6 @@ def held_karp(distancias, salas):
             custo_minimo = dp[mascara_final][u] + distancias[u][0]
             ultimo = u
 
-    # Reconstrói o caminho
     caminho = []
     mascara = mascara_final
     atual = ultimo
@@ -50,3 +48,39 @@ def held_karp(distancias, salas):
         "custo_otimo": custo_minimo,
         "rota_otima": caminho
     }
+
+
+def vizinho_mais_proximo(distancias, salas):
+    n = len(salas)
+    visitados = [False] * n
+    caminho = [0]
+    visitados[0] = True
+    custo_total = 0
+
+    for _ in range(n - 1):
+        atual = caminho[-1]
+        proximo = -1
+        menor_dist = float('inf')
+
+        for j in range(n):
+            if not visitados[j] and distancias[atual][j] < menor_dist:
+                menor_dist = distancias[atual][j]
+                proximo = j
+
+        caminho.append(proximo)
+        visitados[proximo] = True
+        custo_total += menor_dist
+
+    custo_total += distancias[caminho[-1]][0]
+
+    return {
+        "custo_otimo": custo_total,
+        "rota_otima": [salas[i] for i in caminho]
+    }
+
+
+def calcular_rota(distancias, salas):
+    if len(salas) <= 15:
+        return held_karp(distancias, salas)
+    else:
+        return vizinho_mais_proximo(distancias, salas)
