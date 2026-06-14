@@ -15,10 +15,12 @@ function selecionarSala(sala) {
     rota.splice(rota.indexOf(nome), 1);
     sala.setAttribute("stroke", "#8b6914");
     sala.setAttribute("fill", "#1a1a2e");
+    sala.classList.remove("sala-selecionada");
   } else {
     rota.push(nome);
     sala.setAttribute("stroke", "#f0c040");
     sala.setAttribute("fill", "#2a2000");
+    sala.classList.add("sala-selecionada");
   }
 
   atualizarRota();

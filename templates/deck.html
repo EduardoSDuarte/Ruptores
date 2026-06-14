@@ -13,7 +13,7 @@
   </div>
 
   <div class="deck-header">
-    <h2 class="deck-titulo">Escolha seu Deck</h2>
+    <img src="{{ url_for('static', filename='img/escolha_seu_deck.png') }}" class="deck-titulo-img" alt="Escolha seu Deck">
     <div class="energia-bar">
       <span>⚡ Energia: </span>
       <span id="energia-atual">0</span>
@@ -46,7 +46,7 @@
   </div>
 
   <div class="deck-footer">
-    <button class="confirmar-botao" onclick="confirmarDeck()">Confirmar Deck</button>
+    <img src="{{ url_for('static', filename='img/confirmar_deck.png') }}" class="confirmar-botao-img" onclick="confirmarDeck()" alt="Confirmar Deck">
   </div>
 
   <script src="{{ url_for('static', filename='js/deck.js') }}"></script>

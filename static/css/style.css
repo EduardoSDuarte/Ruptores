@@ -25,6 +25,9 @@
   flex-direction: column;
   align-items: center;
   gap: 24px;
+  border-style: solid;
+  border-width: 20px;
+  border-image: url('../img/moldura.png') 150 round;
 }
 
 .menu-titulo-img {
@@ -70,11 +73,10 @@
   padding: 0 10px;
 }
 
-.deck-titulo {
-  color: #f0c040;
-  font-size: 28px;
-  letter-spacing: 3px;
-  text-shadow: 0 0 10px #f0a000;
+.deck-titulo-img {
+  height: 50px;
+  transform: scale(5) translateX(-15px);
+  transform-origin: left center;
 }
 
 .energia-bar {
@@ -83,7 +85,9 @@
   font-size: 18px;
   padding: 10px 24px;
   border-radius: 8px;
-  border: 2px solid #f0c040;
+  border-style: solid;
+  border-width: 20px;
+  border-image: url('../img/moldura.png') 150 round;
 }
 
 .cartas-grid {
@@ -96,21 +100,21 @@
 
 .carta {
   background-color: rgba(13, 13, 26, 0.9);
-  border: 2px solid #8b6914;
   border-radius: 12px;
   padding: 12px;
   cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-style: solid;
+  border-width: 20px;
+  border-image: url('../img/moldura.png') 150 round;
 }
 
 .carta:hover {
   transform: scale(1.03);
-  border-color: #f0c040;
   box-shadow: 0 0 16px rgba(240, 160, 0, 0.4);
 }
 
 .carta.selecionada {
-  border-color: #f0c040;
   box-shadow: 0 0 20px rgba(240, 160, 0, 0.7);
   background-color: rgba(26, 21, 0, 0.95);
 }
@@ -177,15 +181,6 @@
   font-size: 13px;
 }
 
-.carta-efeito {
-  color: #aaa;
-  font-size: 12px;
-  font-style: italic;
-  text-align: center;
-  border-top: 1px solid #333;
-  padding-top: 8px;
-}
-
 .carta-descricao {
   color: #bbb;
   font-size: 11px;
@@ -206,25 +201,6 @@
   justify-content: center;
   margin-top: 30px;
   padding-bottom: 30px;
-}
-
-.confirmar-botao {
-  background: linear-gradient(135deg, #b8860b, #f0c040, #b8860b);
-  color: #1a1a1a;
-  font-size: 18px;
-  font-weight: bold;
-  font-family: Georgia, serif;
-  padding: 14px 48px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  letter-spacing: 2px;
-  box-shadow: 0 4px 20px rgba(240, 160, 0, 0.5);
-  transition: transform 0.2s;
-}
-
-.confirmar-botao:hover {
-  transform: scale(1.05);
 }
 
 /* ===== AVISO DE ENERGIA ===== */
@@ -264,20 +240,21 @@
   padding: 0 10px;
 }
 
-.mapa-titulo {
-  color: #f0c040;
-  font-size: 28px;
-  letter-spacing: 3px;
-  text-shadow: 0 0 10px #f0a000;
+.mapa-titulo-img {
+  height: 50px;
+  transform: scale(5) translateX(-15px);
+  transform-origin: left center;
 }
 
 .custo-bar {
   background-color: #0d0d1a;
   color: #f0c040;
   font-size: 18px;
-  padding: 10px 24px;
+  padding: 10px 30px;
   border-radius: 8px;
-  border: 2px solid #f0c040;
+  border-style: solid;
+  border-width: 20px;
+  border-image: url('../img/moldura.png') 150 round;
 }
 
 .mapa-container {
@@ -285,8 +262,10 @@
   margin: 0 auto;
   background-color: rgba(13, 13, 26, 0.8);
   border-radius: 16px;
-  border: 2px solid #8b6914;
   padding: 10px;
+  border-style: solid;
+  border-width: 30px;
+  border-image: url('../img/moldura.png') 150 round;
 }
 
 #mapa-svg {
@@ -301,13 +280,13 @@
 
 .sala:hover {
   fill: #2a2000;
+  filter: drop-shadow(0 0 8px #f0c040) drop-shadow(0 0 14px #f0a000);
 }
 
 .rota-display {
   max-width: 800px;
   margin: 16px auto;
   background-color: rgba(13, 13, 26, 0.9);
-  border: 2px solid #8b6914;
   border-radius: 8px;
   padding: 12px 24px;
   color: #f0c040;
@@ -320,4 +299,25 @@
   justify-content: center;
   margin-top: 20px;
   padding-bottom: 30px;
+}
+
+/* ===== IMAGENS DE BOTÃO ===== */
+.confirmar-botao-img {
+  width: 220px;
+  max-width: 70vw;
+  cursor: pointer;
+  transform: scale(1.4);
+  transition: transform 0.2s;
+}
+
+.confirmar-botao-img:hover {
+  transform: scale(1.5);
+}
+
+.sala-selecionada {
+  filter: drop-shadow(0 0 8px #f0c040) drop-shadow(0 0 14px #f0a000);
+}
+
+.sala:hover {
+  filter: drop-shadow(0 0 8px #f0c040) drop-shadow(0 0 14px #f0a000);
 }

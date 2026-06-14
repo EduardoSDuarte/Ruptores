@@ -13,7 +13,7 @@
   </div>
 
   <div class="mapa-header">
-    <h2 class="mapa-titulo">Planeje sua Rota</h2>
+    <img src="{{ url_for('static', filename='img/planeje_sua_rota.png') }}" class="mapa-titulo-img" alt="Planeje sua Rota">
     <div class="custo-bar">
       <span>⚔️ Custo total: </span>
       <span id="custo-atual">0</span>
@@ -70,7 +70,7 @@
   </div>
 
   <div class="mapa-footer">
-    <button class="confirmar-botao" onclick="confirmarRota()">Confirmar Rota</button>
+    <img src="{{ url_for('static', filename='img/confirmar_rota.png') }}" class="confirmar-botao-img" onclick="confirmarRota()" alt="Confirmar Rota">
   </div>
 
   <script src="{{ url_for('static', filename='js/mapa.js') }}"></script>
