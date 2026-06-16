@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruptores</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="menu-body">
+
+  <div class="menu-overlay">
+    <img src="{{ url_for('static', filename='img/titulo_menu.png') }}" class="menu-titulo-img" alt="Ruptores">
+    <p class="menu-lore">
+      "Um experimento falhou. A energia se dispersou.<br>
+      Menos de 0,0001% sobreviveram com algo diferente."
+    </p>
+    <a href="/deck">
+      <img src="{{ url_for('static', filename='img/botao_menu.png') }}" class="menu-botao-img" alt="Iniciar Missão">
+    </a>
+  </div>
+
+</body>
+</html>
