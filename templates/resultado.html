@@ -218,6 +218,14 @@
 
     </div>
 
+    <script>
+    const dadosFlask = {
+        tsp: { jogador: {{ score.ef_tsp | default(0) }}, algoritmo: 100 },
+        knapsack: { jogador: {{ score.ef_knapsack | default(0) }}, algoritmo: 100 },
+        scoreGeral: {{ score.score_final | default(0) }},
+        estrelasConquistadas: {{ score.estrelas | default(0) }}
+    };
+    </script>
     <script src="{{ url_for('static', filename='js/resultado.js') }}"></script>
 </body>
 </html>

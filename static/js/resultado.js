@@ -1,11 +1,3 @@
-// Dados simulados do desempenho
-const dadosMockados = {
-    tsp: { jogador: {{ score.ef_tsp | default(0) }}, algoritmo: 100 },
-    knapsack: { jogador: {{ score.ef_knapsack | default(0) }}, algoritmo: 100 },
-    scoreGeral: {{ score.score_final | default(0) }},
-    estrelasConquistadas: {{ score.estrelas | default(0) }}
-};
-
 // Dispara as animações de forma automática quando a tela carrega
 document.addEventListener("DOMContentLoaded", () => {
     inicializarValoresTextuais();
@@ -19,29 +11,29 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function inicializarValoresTextuais() {
-    document.getElementById("txt-tempo-jogador").innerText = `${dadosMockados.tsp.jogador}%`;
+    document.getElementById("txt-tempo-jogador").innerText = `${dadosFlask.tsp.jogador}%`;
     document.getElementById("txt-tempo-algo").innerText = `100%`;
-    document.getElementById("txt-peso-jogador").innerText = `${dadosMockados.knapsack.jogador}%`;
+    document.getElementById("txt-peso-jogador").innerText = `${dadosFlask.knapsack.jogador}%`;
     document.getElementById("txt-peso-algo").innerText = `100%`;
 }
 
 function animarBarrasTSP() {
-    const piorTempo = Math.max(dadosMockados.tsp.jogador, dadosMockados.tsp.algoritmo);
+    const piorTempo = Math.max(dadosFlask.tsp.jogador, dadosFlask.tsp.algoritmo);
     // Em tempo (TSP), menor valor é melhor eficiência
-    document.getElementById("bar-jogador-tsp").style.width = `${(1 - (dadosMockados.tsp.jogador / (piorTempo * 1.3))) * 100}%`;
-    document.getElementById("bar-algo-tsp").style.width = `${(1 - (dadosMockados.tsp.algoritmo / (piorTempo * 1.3))) * 100}%`;
+    document.getElementById("bar-jogador-tsp").style.width = `${(1 - (dadosFlask.tsp.jogador / (piorTempo * 1.3))) * 100}%`;
+    document.getElementById("bar-algo-tsp").style.width = `${(1 - (dadosFlask.tsp.algoritmo / (piorTempo * 1.3))) * 100}%`;
 }
 
 function animarBarrasKnapsack() {
-    const melhorValor = Math.max(dadosMockados.knapsack.jogador, dadosMockados.knapsack.algoritmo);
-    document.getElementById("bar-jogador-knap").style.width = `${(dadosMockados.knapsack.jogador / melhorValor) * 100}%`;
-    document.getElementById("bar-algo-knap").style.width = `${(dadosMockados.knapsack.algoritmo / melhorValor) * 100}%`;
+    const melhorValor = Math.max(dadosFlask.knapsack.jogador, dadosFlask.knapsack.algoritmo);
+    document.getElementById("bar-jogador-knap").style.width = `${(dadosFlask.knapsack.jogador / melhorValor) * 100}%`;
+    document.getElementById("bar-algo-knap").style.width = `${(dadosFlask.knapsack.algoritmo / melhorValor) * 100}%`;
 }
 
 function animarContadorScore() {
     const elementoScore = document.getElementById("num-score");
     let scoreAtual = 0;
-    const scoreFinal = dadosMockados.scoreGeral;
+    const scoreFinal = dadosFlask.scoreGeral;
     
     const timer = setInterval(() => {
         if (scoreAtual >= scoreFinal) {
@@ -73,7 +65,7 @@ function iluminarEstrelasGraficas() {
 
 // Redirecionamentos das rotas do Flask
 document.getElementById("btn-jogar-novamente").addEventListener("click", () => {
-    window.location.href = "/jogar";
+    window.location.href = "/nova_partida";
 });
 
 document.getElementById("btn-menu").addEventListener("click", () => {
