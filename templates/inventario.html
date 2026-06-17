@@ -1,0 +1,99 @@
+{% set itens = itens|default([]) %}
+{% set tem_proxima_sala = tem_proxima_sala|default(true) %}
+{% set proxima_url = proxima_url|default('/batalha') %}
+{% set texto_proxima = texto_proxima|default('Continuar para próxima batalha') %}
+{% set vida_time = vida_time|default(100) %}
+{% set vida_max_time = vida_max_time|default(100) %}
+{% set dano_time = dano_time|default(0) %}
+{% set bonus_vida = bonus_vida|default(0) %}
+{% set bonus_dano = bonus_dano|default(0) %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruptores — Inventário</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="inventario-body">
+
+  <main class="inventory-shell">
+    <header class="inventory-header">
+      <div>
+        <p class="screen-kicker">Tela 6 — Inventário</p>
+        <h1>Itens Coletados</h1>
+      </div>
+      <div class="room-indicator"><span id="inventory-count">{{ itens|length }}</span> item(ns)</div>
+    </header>
+
+    <p class="inventory-feedback" id="inventory-feedback">
+      Use os itens agora para ativar bônus nas próximas batalhas ou descarte o que não quiser carregar.
+    </p>
+
+    <section class="team-status-panel" id="team-status-panel" aria-live="polite">
+      <article class="team-stat-card">
+        <span class="team-stat-label">Vida do time</span>
+        <strong><span id="team-life-current">{{ vida_time }}</span>/<span id="team-life-max">{{ vida_max_time }}</span></strong>
+        <div class="life-bar inventory-life-bar" aria-label="Vida atual do time">
+          <div class="life-fill player-life" id="team-life-fill" style="width: {{ ((vida_time / vida_max_time) * 100)|round(0, 'floor') if vida_max_time else 0 }}%"></div>
+        </div>
+        <small id="team-life-bonus">{{ '+' ~ bonus_vida ~ '% vida máxima' if bonus_vida else 'Sem bônus de vida ativo' }}</small>
+      </article>
+
+      <article class="team-stat-card">
+        <span class="team-stat-label">Dano do time</span>
+        <strong><span id="team-damage-current">{{ dano_time }}</span></strong>
+        <small id="team-damage-bonus">{{ '+' ~ bonus_dano ~ '% dano' if bonus_dano else 'Sem bônus de dano ativo' }}</small>
+      </article>
+    </section>
+
+    <section class="inventory-list" id="inventory-list">
+      {% for item in itens %}
+      <article class="item-card inventory-item {% if item.usado %}used{% endif %}" data-id="{{ item.id|default(loop.index0) }}">
+        <div class="item-icon">◆</div>
+        <div class="item-content">
+          <h2>{{ item.nome }}</h2>
+          <p>{{ item.descricao }}</p>
+          <span class="item-effect">{{ item.efeito }}</span>
+          {% if item.usado %}
+          <span class="item-status">Ativo</span>
+          {% endif %}
+        </div>
+        <div class="item-actions">
+          <button type="button" class="small-action-btn use-item-btn" {% if item.usado %}disabled{% endif %}>
+            {{ 'Usado' if item.usado else 'Usar' }}
+          </button>
+          <button type="button" class="small-action-btn danger discard-item-btn">Descartar</button>
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+
+    <section class="empty-inventory" id="empty-inventory" {% if itens|length > 0 %}hidden{% endif %}>
+      <div class="item-glow">◇</div>
+      <h2>Inventário vazio</h2>
+      <p>Nenhum item foi coletado ainda.</p>
+    </section>
+
+    <footer class="inventory-footer">
+      <a class="secondary-action" href="{{ proxima_url }}">{{ texto_proxima }}</a>
+      {% if tem_proxima_sala %}
+      <a class="primary-action" href="/resultado">Encerrar e ver resultado</a>
+      {% endif %}
+    </footer>
+  </main>
+
+  <script>
+    window.INVENTARIO_DADOS = {
+      itens: {{ itens|tojson }},
+      proximaUrl: {{ proxima_url|tojson }},
+      vidaTime: {{ vida_time|tojson }},
+      vidaMaxTime: {{ vida_max_time|tojson }},
+      danoTime: {{ dano_time|tojson }},
+      bonusVida: {{ bonus_vida|tojson }},
+      bonusDano: {{ bonus_dano|tojson }}
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/inventario.js') }}"></script>
+</body>
+</html>
