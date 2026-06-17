@@ -1,9 +1,9 @@
 // Dados simulados do desempenho
 const dadosMockados = {
-    tsp: { jogador: 140, algoritmo: 95 },
-    knapsack: { jogador: 390, algoritmo: 520 },
-    scoreGeral: 780,
-    estrelasConquistadas: 4
+    tsp: { jogador: {{ score.ef_tsp | default(0) }}, algoritmo: 100 },
+    knapsack: { jogador: {{ score.ef_knapsack | default(0) }}, algoritmo: 100 },
+    scoreGeral: {{ score.score_final | default(0) }},
+    estrelasConquistadas: {{ score.estrelas | default(0) }}
 };
 
 // Dispara as animações de forma automática quando a tela carrega
@@ -19,10 +19,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function inicializarValoresTextuais() {
-    document.getElementById("txt-tempo-jogador").innerText = `${dadosMockados.tsp.jogador}s`;
-    document.getElementById("txt-tempo-algo").innerText = `${dadosMockados.tsp.algoritmo}s`;
-    document.getElementById("txt-peso-jogador").innerText = `${dadosMockados.knapsack.jogador} pts`;
-    document.getElementById("txt-peso-algo").innerText = `${dadosMockados.knapsack.algoritmo} pts`;
+    document.getElementById("txt-tempo-jogador").innerText = `${dadosMockados.tsp.jogador}%`;
+    document.getElementById("txt-tempo-algo").innerText = `100%`;
+    document.getElementById("txt-peso-jogador").innerText = `${dadosMockados.knapsack.jogador}%`;
+    document.getElementById("txt-peso-algo").innerText = `100%`;
 }
 
 function animarBarrasTSP() {
