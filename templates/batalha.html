@@ -1,10 +1,110 @@
+{% set sala_numero = sala_numero|default(1) %}
+{% set total_salas = total_salas|default(5) %}
+{% set inimigo = inimigo|default({'nome': 'Mutante Instável', 'vida_atual': 120, 'vida_max': 120, 'dano': 14, 'descricao': 'Criatura afetada pela ruptura de energia.'}) %}
+{% set cartas_jogador = cartas_jogador|default([
+  {'nome': 'Sentinela', 'codinome': 'Escudo', 'vida_atual': 25, 'vida': 25, 'dano': 12},
+  {'nome': 'Executor', 'codinome': 'Lâmina', 'vida_atual': 40, 'vida': 40, 'dano': 18},
+  {'nome': 'Pietra', 'codinome': 'Pulso', 'vida_atual': 32, 'vida': 32, 'dano': 15}
+]) %}
+{% set venceu = venceu|default(none) %}
+{% set eventos_combate = eventos_combate|default([
+  'O time entrou na sala e encontrou o inimigo.',
+  'Sentinela atacou causando 12 de dano.',
+  'Executor atacou causando 18 de dano.',
+  'O inimigo contra-atacou o time.',
+  'Pietra ativou Pulso e finalizou a rodada.'
+]) %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Batalha</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruptores — Batalha</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-  <h1 style="color:white; background:black; padding:20px;">Tela de Batalha — em breve (Integrante 4)</h1>
+<body class="batalha-body">
+
+  <main class="battle-shell">
+    <header class="battle-header">
+      <div>
+        <p class="screen-kicker">Tela 4 — Batalha</p>
+        <h1>Batalha da Sala {{ sala_numero }}</h1>
+      </div>
+      <div class="room-indicator">Sala {{ sala_numero }} de {{ total_salas }}</div>
+    </header>
+
+    <section class="battle-arena">
+      <div class="team-panel">
+        <h2>Time do Jogador</h2>
+        <div class="team-cards">
+          {% for carta in cartas_jogador %}
+          {% set vida_atual = carta.vida_atual|default(carta.vida) %}
+          {% set vida_max = carta.vida|default(carta.vida_max|default(1)) %}
+          <article class="battle-card" data-player-index="{{ loop.index0 }}" data-current-life="{{ vida_atual }}" data-max-life="{{ vida_max }}">
+            <div class="battle-card-head">
+              <strong>{{ carta.nome }}</strong>
+              <span>{{ carta.codinome|default('Ruptor') }}</span>
+            </div>
+            <div class="life-row">
+              <span>❤️ <span class="player-life-value">{{ vida_atual }}/{{ vida_max }}</span></span>
+              <span>⚔️ {{ carta.dano }}</span>
+            </div>
+            <div class="life-bar" aria-label="Vida da carta">
+              <div class="life-fill player-life player-life-fill" style="width: {{ (vida_atual / vida_max * 100)|round(0, 'floor') }}%"></div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="versus-mark">VS</div>
+
+      <aside class="enemy-panel">
+        <p class="screen-kicker">Ameaça detectada</p>
+        <h2 id="enemy-name">{{ inimigo.nome }}</h2>
+        <p class="enemy-description">{{ inimigo.descricao|default('Hostil contaminado pela energia dispersa.') }}</p>
+        <div class="enemy-avatar" aria-hidden="true">☣</div>
+        <div class="life-row enemy-life-text">
+          <span>Vida</span>
+          <span id="enemy-life-value">{{ inimigo.vida_atual|default(inimigo.vida_max) }}/{{ inimigo.vida_max }}</span>
+        </div>
+        <div class="life-bar enemy-life-bar" aria-label="Vida do inimigo">
+          <div id="enemy-life-fill" class="life-fill enemy-life" style="width: {{ ((inimigo.vida_atual|default(inimigo.vida_max)) / inimigo.vida_max * 100)|round(0, 'floor') }}%"></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="combat-console">
+      <div class="console-head">
+        <h2>Log de Combate</h2>
+        <button type="button" class="small-action-btn" id="start-battle-btn">Iniciar combate</button>
+      </div>
+      <div class="combat-log" id="combat-log" aria-live="polite"></div>
+    </section>
+
+    <section class="battle-actions" id="battle-actions" hidden>
+      <a class="primary-action" id="reward-link" href="/recompensa">Ir para recompensa</a>
+      <a class="secondary-action" id="retry-link" href="/mapa">Replanejar rota</a>
+    </section>
+  </main>
+
+  <div class="game-over-modal" id="game-over-modal" hidden>
+    <div class="game-over-card">
+      <p class="screen-kicker">Missão encerrada</p>
+      <h2>Game Over</h2>
+      <p>Seu time foi neutralizado antes de concluir a sala.</p>
+      <a class="primary-action" href="/deck">Montar novo deck</a>
+    </div>
+  </div>
+
+  <script>
+    window.BATALHA_DADOS = {
+      inimigo: {{ inimigo|tojson }},
+      cartas: {{ cartas_jogador|tojson }},
+      eventos: {{ eventos_combate|tojson }},
+      venceu: {{ venceu|tojson }}
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/batalha.js') }}"></script>
 </body>
 </html>
