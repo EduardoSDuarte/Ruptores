@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruptores — Mapa</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="mapa-body">
+
+  <div class="aviso-energia" id="aviso-rota">
+    ⚠️ Selecione pelo menos 2 salas!
+  </div>
+
+  <div class="mapa-header">
+    <img src="{{ url_for('static', filename='img/planeje_sua_rota.png') }}" class="mapa-titulo-img" alt="Planeje sua Rota">
+    <div class="custo-bar">
+      <span>⚔️ Custo total: </span>
+      <span id="custo-atual">0</span>
+    </div>
+  </div>
+
+  <div class="mapa-container">
+    <svg id="mapa-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+
+      <!-- Linhas entre salas -->
+      <line x1="400" y1="460" x2="150" y2="300" stroke="#8b6914" stroke-width="2"/>
+      <line x1="400" y1="460" x2="400" y2="200" stroke="#8b6914" stroke-width="2"/>
+      <line x1="400" y1="460" x2="650" y2="300" stroke="#8b6914" stroke-width="2"/>
+      <line x1="150" y1="300" x2="400" y2="200" stroke="#8b6914" stroke-width="2"/>
+      <line x1="150" y1="300" x2="650" y2="300" stroke="#8b6914" stroke-width="2"/>
+      <line x1="400" y1="200" x2="650" y2="300" stroke="#8b6914" stroke-width="2"/>
+      <line x1="400" y1="200" x2="400" y2="60" stroke="#8b6914" stroke-width="2"/>
+      <line x1="150" y1="300" x2="400" y2="60" stroke="#8b6914" stroke-width="2"/>
+      <line x1="650" y1="300" x2="400" y2="60" stroke="#8b6914" stroke-width="2"/>
+
+      <!-- Pesos das arestas -->
+      <text x="265" y="390" fill="#f0c040" font-size="14">3</text>
+      <text x="408" y="345" fill="#f0c040" font-size="14">6</text>
+      <text x="535" y="390" fill="#f0c040" font-size="14">5</text>
+      <text x="255" y="240" fill="#f0c040" font-size="14">2</text>
+      <text x="390" y="310" fill="#f0c040" font-size="14">8</text>
+      <text x="535" y="240" fill="#f0c040" font-size="14">4</text>
+      <text x="408" y="140" fill="#f0c040" font-size="14">7</text>
+      <text x="265" y="170" fill="#f0c040" font-size="14">8</text>
+      <text x="535" y="170" fill="#f0c040" font-size="14">6</text>
+
+      <!-- Salas -->
+      <circle cx="400" cy="460" r="30" fill="#1a1a2e" stroke="#f0c040" stroke-width="2" class="sala" data-nome="Entrada" onclick="selecionarSala(this)"/>
+      <text x="400" y="465" text-anchor="middle" fill="#f0c040" font-size="11" pointer-events="none">Entrada</text>
+
+      <circle cx="150" cy="300" r="30" fill="#1a1a2e" stroke="#8b6914" stroke-width="2" class="sala" data-nome="Alfa" onclick="selecionarSala(this)"/>
+      <text x="150" y="305" text-anchor="middle" fill="#f0c040" font-size="11" pointer-events="none">Alfa</text>
+
+      <circle cx="400" cy="200" r="30" fill="#1a1a2e" stroke="#8b6914" stroke-width="2" class="sala" data-nome="Beta" onclick="selecionarSala(this)"/>
+      <text x="400" y="205" text-anchor="middle" fill="#f0c040" font-size="11" pointer-events="none">Beta</text>
+
+      <circle cx="650" cy="300" r="30" fill="#1a1a2e" stroke="#8b6914" stroke-width="2" class="sala" data-nome="Gama" onclick="selecionarSala(this)"/>
+      <text x="650" y="305" text-anchor="middle" fill="#f0c040" font-size="11" pointer-events="none">Gama</text>
+
+      <circle cx="400" cy="60" r="30" fill="#1a1a2e" stroke="#8b6914" stroke-width="2" class="sala" data-nome="Delta" onclick="selecionarSala(this)"/>
+      <text x="400" y="65" text-anchor="middle" fill="#f0c040" font-size="11" pointer-events="none">Delta</text>
+
+    </svg>
+  </div>
+
+  <div class="rota-display">
+    <span>Rota: </span>
+    <span id="rota-texto">Nenhuma sala selecionada</span>
+  </div>
+
+  <div class="mapa-footer">
+    <img src="{{ url_for('static', filename='img/confirmar_rota.png') }}" class="confirmar-botao-img" onclick="confirmarRota()" alt="Confirmar Rota">
+  </div>
+
+  <script src="{{ url_for('static', filename='js/mapa.js') }}"></script>
+</body>
+</html>
