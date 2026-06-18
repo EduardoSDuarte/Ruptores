@@ -7,6 +7,7 @@ const retryLink = document.getElementById("retry-link");
 const gameOverModal = document.getElementById("game-over-modal");
 const enemyLifeFill = document.getElementById("enemy-life-fill");
 const enemyLifeValue = document.getElementById("enemy-life-value");
+#comentariopraaddnabranch
 
 const playerCards = Array.from(document.querySelectorAll(".battle-card"));
 let playerState = playerCards.map((card) => {
