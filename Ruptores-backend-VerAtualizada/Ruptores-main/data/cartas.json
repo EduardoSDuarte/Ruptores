@@ -1,1 +1,93 @@
 
+[
+  {
+    "id": 1,
+    "nome": "Eduardo",
+    "codinome": "Psiôn",
+    "classificacao": "Mental / Psíquico",
+    "custo": 3,
+    "vida": 25,
+    "dano": 25,
+    "efeito": "Inimigo perde 20% de dano na próxima rodada"
+  },
+  {
+    "id": 2,
+    "nome": "Monique",
+    "codinome": "Arsenal",
+    "classificacao": "Tecnológico / Combate",
+    "custo": 4,
+    "vida": 25,
+    "dano": 30,
+    "efeito": "Se jogada após outra carta, dano +50%"
+  },
+  {
+    "id": 3,
+    "nome": "Pietra",
+    "codinome": "Ferrum",
+    "classificacao": "Elemental / Metal",
+    "custo": 3,
+    "vida": 35,
+    "dano": 20,
+    "efeito": "Bloqueia 10 de dano do próximo ataque inimigo"
+  },
+  {
+    "id": 4,
+    "nome": "Camila M.",
+    "codinome": "Gaia",
+    "classificacao": "Elemental / Natureza",
+    "custo": 3,
+    "vida": 35,
+    "dano": 15,
+    "efeito": "Cura 15 de vida do time ao ser jogada"
+  },
+  {
+    "id": 5,
+    "nome": "Camilla V.",
+    "codinome": "Oráculo",
+    "classificacao": "Temporal / Sensorial",
+    "custo": 2,
+    "vida": 20,
+    "dano": 10,
+    "efeito": "Próxima carta aliada não recebe dano nessa rodada"
+  },
+  {
+    "id": 6,
+    "nome": "Ryan",
+    "codinome": "Beastmind",
+    "classificacao": "Espiritual / Animal",
+    "custo": 3,
+    "vida": 30,
+    "dano": 20,
+    "efeito": "Revela o dano do inimigo antes da rodada"
+  },
+  {
+    "id": 7,
+    "nome": "Vanessa",
+    "codinome": "Voltage",
+    "classificacao": "Elemental / Energia",
+    "custo": 4,
+    "vida": 25,
+    "dano": 35,
+    "efeito": "30% de chance de paralisar o inimigo"
+  },
+  {
+    "id": 8,
+    "nome": "Leticya",
+    "codinome": "Nightmare",
+    "classificacao": "Ilusão",
+    "custo": 3,
+    "vida": 20,
+    "dano": 25,
+    "efeito": "Inimigo fica com -30% de dano por 2 rodadas"
+  },
+  {
+    "id": 9,
+    "nome": "Mariana",
+    "codinome": "Siren",
+    "classificacao": "Controle / Som",
+    "custo": 2,
+    "vida": 20,
+    "dano": 10,
+    "efeito": "Inimigo pula o próximo ataque"
+  }
+]
