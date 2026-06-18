@@ -1,0 +1,932 @@
+
+/* Regra global: garante que elementos com atributo hidden realmente sumam.
+   Sem isso, classes como .game-over-modal { display: grid; } podem sobrescrever
+   o hidden e mostrar o Game Over antes da batalha começar. */
+[hidden] {
+  display: none !important;
+}
+
+/* ===== GERAL ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== TELA 1 — MENU ===== */
+.menu-body {
+  background-image: url('../img/imagem_menu.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-overlay {
+  background-color: rgba(0, 0, 0, 0.45);
+  padding: 50px 60px;
+  border-radius: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  border-style: solid;
+  border-width: 20px;
+  border-image: url('../img/moldura.png') 150 round;
+}
+
+.menu-titulo-img {
+  width: 420px;
+  max-width: 90vw;
+}
+
+.menu-lore {
+  color: #ddd;
+  font-size: 16px;
+  font-family: Georgia, serif;
+  font-style: italic;
+  line-height: 1.8;
+  max-width: 480px;
+}
+
+.menu-botao-img {
+  width: 280px;
+  max-width: 80vw;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.menu-botao-img:hover {
+  transform: scale(1.05);
+}
+
+/* ===== TELA 2 — DECK ===== */
+.deck-body {
+  background-image: url('../img/fundo_deck.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Georgia, serif;
+}
+
+.deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 0 10px;
+}
+
+.deck-titulo-img {
+  height: 50px;
+  transform: scale(5) translateX(-15px);
+  transform-origin: left center;
+}
+
+.energia-bar {
+  background-color: #0d0d1a;
+  color: #f0c040;
+  font-size: 18px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 20px;
+  border-image: url('../img/moldura.png') 150 round;
+}
+
+.cartas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.carta {
+  background-color: rgba(13, 13, 26, 0.9);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-style: solid;
+  border-width: 20px;
+  border-image: url('../img/moldura.png') 150 round;
+}
+
+.carta:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 16px rgba(240, 160, 0, 0.4);
+}
+
+.carta.selecionada {
+  box-shadow: 0 0 20px rgba(240, 160, 0, 0.7);
+  background-color: rgba(26, 21, 0, 0.95);
+}
+
+.carta-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.carta-nome {
+  color: #f0c040;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.carta-classe {
+  background-color: #2a6e2a;
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.carta-foto {
+  position: relative;
+  height: 120px;
+  background-color: #111;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  border: 1px solid #333;
+  overflow: hidden;
+}
+
+.carta-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.carta-codinome {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #f0c040;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-shadow: 0 0 6px #000, 0 0 6px #000;
+}
+
+.carta-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 8px;
+  color: #ddd;
+  font-size: 13px;
+}
+
+.carta-descricao {
+  color: #bbb;
+  font-size: 11px;
+  text-align: center;
+  margin-top: 6px;
+  line-height: 1.4;
+  border-top: 1px solid #333;
+  padding-top: 6px;
+  display: none;
+}
+
+.carta:hover .carta-descricao {
+  display: block;
+}
+
+.deck-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  padding-bottom: 30px;
+}
+
+/* ===== AVISO DE ENERGIA ===== */
+.aviso-energia {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #7a0000;
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: 2px solid #ff4444;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  z-index: 999;
+  text-align: center;
+}
+
+/* ===== TELA 3 — MAPA ===== */
+.mapa-body {
+  background-image: url('../img/fundo_mapa.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Georgia, serif;
+}
+
+.mapa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.mapa-titulo-img {
+  height: 50px;
+  transform: scale(5) translateX(-15px);
+  transform-origin: left center;
+}
+
+.custo-bar {
+  background-color: #0d0d1a;
+  color: #f0c040;
+  font-size: 18px;
+  padding: 10px 30px;
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 20px;
+  border-image: url('../img/moldura.png') 150 round;
+}
+
+.mapa-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: rgba(13, 13, 26, 0.8);
+  border-radius: 16px;
+  padding: 10px;
+  border-style: solid;
+  border-width: 30px;
+  border-image: url('../img/moldura.png') 150 round;
+}
+
+#mapa-svg {
+  width: 100%;
+  height: auto;
+}
+
+.sala {
+  cursor: pointer;
+  transition: fill 0.2s;
+}
+
+.sala:hover {
+  fill: #2a2000;
+  filter: drop-shadow(0 0 8px #f0c040) drop-shadow(0 0 14px #f0a000);
+}
+
+.rota-display {
+  max-width: 800px;
+  margin: 16px auto;
+  background-color: rgba(13, 13, 26, 0.9);
+  border-radius: 8px;
+  padding: 12px 24px;
+  color: #f0c040;
+  font-size: 16px;
+  text-align: center;
+}
+
+.mapa-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding-bottom: 30px;
+}
+
+/* ===== IMAGENS DE BOTÃO ===== */
+.confirmar-botao-img {
+  width: 220px;
+  max-width: 70vw;
+  cursor: pointer;
+  transform: scale(1.4);
+  transition: transform 0.2s;
+}
+
+.confirmar-botao-img:hover {
+  transform: scale(1.5);
+}
+
+.sala-selecionada {
+  filter: drop-shadow(0 0 8px #f0c040) drop-shadow(0 0 14px #f0a000);
+}
+
+.sala:hover {
+  filter: drop-shadow(0 0 8px #f0c040) drop-shadow(0 0 14px #f0a000);
+}
+/* ===== TELAS 4, 5 E 6 — INTEGRANTE 4 ===== */
+.batalha-body,
+.recompensa-body,
+.inventario-body {
+  min-height: 100vh;
+  font-family: Georgia, serif;
+  color: #f7e7b0;
+  background:
+    radial-gradient(circle at top, rgba(240, 192, 64, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(5, 8, 20, 0.94), rgba(21, 8, 18, 0.96)),
+    url('../img/fundo_mapa.png');
+  background-size: cover;
+  background-position: center;
+  padding: 28px;
+}
+
+.battle-shell,
+.reward-shell,
+.inventory-shell {
+  width: min(1120px, 96vw);
+  margin: 0 auto;
+}
+
+.battle-header,
+.inventory-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 18px 24px;
+  background-color: rgba(13, 13, 26, 0.88);
+  border-radius: 14px;
+  border: 1px solid rgba(240, 192, 64, 0.32);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.38);
+}
+
+.screen-kicker {
+  color: #f0c040;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.battle-header h1,
+.reward-card h1,
+.inventory-header h1 {
+  font-size: clamp(30px, 5vw, 56px);
+  line-height: 1;
+  color: #fff2c2;
+  text-shadow: 0 0 16px rgba(240, 192, 64, 0.18);
+}
+
+.room-indicator {
+  background-color: rgba(3, 4, 12, 0.92);
+  color: #f0c040;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(240, 192, 64, 0.38);
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.battle-arena {
+  display: grid;
+  grid-template-columns: 1.2fr 90px 0.85fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.team-panel,
+.enemy-panel,
+.combat-console,
+.reward-card,
+.inventory-list,
+.empty-inventory {
+  background-color: rgba(13, 13, 26, 0.88);
+  border-radius: 16px;
+  border-style: solid;
+  border-width: 24px;
+  border-image: url('../img/moldura.png') 150 round;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.team-panel,
+.enemy-panel {
+  padding: 18px;
+}
+
+.team-panel h2,
+.enemy-panel h2,
+.combat-console h2,
+.reward-card h2,
+.empty-inventory h2 {
+  color: #f0c040;
+  margin-bottom: 14px;
+}
+
+.team-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.battle-card,
+.item-card {
+  background: linear-gradient(145deg, rgba(15, 17, 34, 0.98), rgba(27, 18, 28, 0.95));
+  border: 1px solid rgba(240, 192, 64, 0.26);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.battle-card-head,
+.life-row,
+.console-head,
+.reward-actions,
+.item-actions,
+.inventory-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.battle-card-head strong {
+  color: #fff2c2;
+  font-size: 16px;
+}
+
+.battle-card-head span,
+.enemy-description,
+.item-card p,
+.inventory-feedback,
+.reward-feedback,
+.empty-inventory p {
+  color: #c9bd98;
+  line-height: 1.5;
+}
+
+.life-row {
+  margin: 12px 0 8px;
+  font-size: 13px;
+  color: #ddd1aa;
+}
+
+.life-bar {
+  height: 12px;
+  overflow: hidden;
+  background-color: #080912;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+}
+
+.life-fill {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.45s ease;
+}
+
+.player-life {
+  background: linear-gradient(90deg, #2f9e44, #b2f2bb);
+}
+
+.enemy-life {
+  background: linear-gradient(90deg, #8a1212, #ff6b6b);
+}
+
+.versus-mark {
+  align-self: center;
+  justify-self: center;
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #0d0d1a;
+  background: radial-gradient(circle, #fff2c2, #f0c040);
+  font-weight: 900;
+  font-size: 24px;
+  box-shadow: 0 0 26px rgba(240, 192, 64, 0.45);
+}
+
+.enemy-panel {
+  text-align: center;
+}
+
+.enemy-avatar {
+  width: 120px;
+  height: 120px;
+  display: grid;
+  place-items: center;
+  margin: 18px auto;
+  border-radius: 50%;
+  font-size: 56px;
+  background: radial-gradient(circle, rgba(122, 0, 0, 0.88), rgba(17, 8, 18, 0.96));
+  border: 1px solid rgba(255, 107, 107, 0.35);
+  box-shadow: 0 0 40px rgba(122, 0, 0, 0.35);
+}
+
+.enemy-life-text {
+  font-size: 15px;
+}
+
+.combat-console {
+  margin-top: 20px;
+  padding: 18px;
+}
+
+.combat-log {
+  min-height: 180px;
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 14px;
+  border-radius: 12px;
+  background-color: rgba(3, 4, 12, 0.9);
+  border: 1px solid rgba(240, 192, 64, 0.18);
+}
+
+.log-line {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: logEntry 0.28s ease forwards;
+  padding: 7px 0;
+  color: #e9dec0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.log-line::before {
+  content: '› ';
+  color: #f0c040;
+}
+
+.log-line.success {
+  color: #b2f2bb;
+}
+
+.danger-text {
+  color: #ffb3b3;
+}
+
+@keyframes logEntry {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.small-action-btn,
+.primary-action,
+.secondary-action,
+.button-reset {
+  border: 0;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.small-action-btn {
+  color: #0d0d1a;
+  background-color: #f0c040;
+  padding: 9px 14px;
+  border-radius: 8px;
+}
+
+.small-action-btn:hover,
+.primary-action:hover,
+.secondary-action:hover {
+  transform: translateY(-2px);
+}
+
+.small-action-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+.small-action-btn.danger {
+  color: #fff;
+  background-color: #7a0000;
+}
+
+.battle-actions,
+.reward-actions,
+.inventory-footer {
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.primary-action,
+.secondary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 12px 22px;
+  border-radius: 10px;
+}
+
+.primary-action {
+  color: #0d0d1a;
+  background: linear-gradient(135deg, #fff2c2, #f0c040);
+  box-shadow: 0 0 18px rgba(240, 192, 64, 0.28);
+}
+
+.secondary-action {
+  color: #f0c040;
+  background-color: rgba(3, 4, 12, 0.9);
+  border: 1px solid rgba(240, 192, 64, 0.35);
+}
+
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.game-over-modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background-color: rgba(0, 0, 0, 0.72);
+  z-index: 20;
+}
+
+.game-over-card {
+  width: min(420px, 92vw);
+  padding: 32px;
+  text-align: center;
+  border-radius: 18px;
+  background-color: #12060a;
+  border: 1px solid rgba(255, 107, 107, 0.45);
+  box-shadow: 0 0 50px rgba(122, 0, 0, 0.38);
+}
+
+.game-over-card h2 {
+  color: #ffb3b3;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.game-over-card p {
+  color: #e5c2c2;
+  margin-bottom: 22px;
+}
+
+/* ===== TELA 5 — RECOMPENSA ===== */
+.reward-shell {
+  min-height: calc(100vh - 56px);
+  display: grid;
+  place-items: center;
+}
+
+.reward-card {
+  width: min(680px, 96vw);
+  padding: 26px;
+  text-align: center;
+}
+
+.reward-room {
+  width: fit-content;
+  margin: 18px auto;
+}
+
+.item-glow {
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  margin: 6px auto 18px;
+  border-radius: 50%;
+  color: #fff2c2;
+  font-size: 48px;
+  background: radial-gradient(circle, rgba(240, 192, 64, 0.5), rgba(13, 13, 26, 0.2));
+  box-shadow: 0 0 45px rgba(240, 192, 64, 0.4);
+}
+
+.featured-item {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin: 16px auto;
+  text-align: left;
+}
+
+.item-icon {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: #0d0d1a;
+  background: linear-gradient(135deg, #fff2c2, #f0c040);
+  font-size: 24px;
+}
+
+.item-card h2,
+.item-card h3 {
+  color: #fff2c2;
+  margin-bottom: 6px;
+}
+
+.item-effect {
+  display: inline-block;
+  margin-top: 8px;
+  color: #f0c040;
+  font-weight: bold;
+}
+
+.reward-feedback,
+.inventory-feedback {
+  margin-top: 14px;
+}
+
+.feedback-highlight {
+  color: #fff2c2;
+  text-shadow: 0 0 12px rgba(240, 192, 64, 0.45);
+}
+
+.item-collected {
+  animation: collectedPulse 0.55s ease;
+}
+
+@keyframes collectedPulse {
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 60px rgba(240, 192, 64, 0.28);
+  }
+}
+
+/* ===== TELA 6 — INVENTÁRIO ===== */
+.inventory-feedback {
+  background-color: rgba(13, 13, 26, 0.78);
+  border: 1px solid rgba(240, 192, 64, 0.16);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+
+.inventory-list {
+  padding: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.inventory-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  transition: opacity 0.25s, transform 0.25s, border-color 0.25s;
+}
+
+.inventory-item.used {
+  border-color: rgba(178, 242, 187, 0.55);
+  box-shadow: 0 0 20px rgba(47, 158, 68, 0.16);
+}
+
+.inventory-item.removed {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.empty-inventory {
+  text-align: center;
+  padding: 36px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 860px) {
+  .batalha-body,
+  .recompensa-body,
+  .inventario-body {
+    padding: 16px;
+  }
+
+  .battle-header,
+  .inventory-header,
+  .battle-arena,
+  .console-head {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .battle-arena {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .versus-mark {
+    width: 62px;
+    height: 62px;
+  }
+
+  .team-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory-item {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .item-actions {
+    justify-content: center;
+  }
+}
+
+
+.battle-card.taking-damage {
+  animation: damage-pulse 0.42s ease;
+  border-color: rgba(255, 107, 107, 0.9);
+}
+
+.battle-card.defeated-card {
+  opacity: 0.55;
+  filter: grayscale(0.75);
+}
+
+@keyframes damage-pulse {
+  0% { transform: translateX(0); box-shadow: 0 0 0 rgba(255, 107, 107, 0); }
+  25% { transform: translateX(-5px); box-shadow: 0 0 18px rgba(255, 107, 107, 0.75); }
+  50% { transform: translateX(5px); }
+  100% { transform: translateX(0); box-shadow: 0 0 0 rgba(255, 107, 107, 0); }
+}
+
+.item-status {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border: 1px solid rgba(178, 242, 187, 0.45);
+  border-radius: 999px;
+  color: #d3f9d8;
+  background: rgba(47, 158, 68, 0.12);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ===== PAINEL DE STATUS DO INVENTÁRIO ===== */
+.team-status-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.team-stat-card {
+  background: rgba(13, 13, 26, 0.86);
+  border: 1px solid rgba(240, 192, 64, 0.24);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.24);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.team-stat-label {
+  display: block;
+  color: #c9bd98;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+
+.team-stat-card strong {
+  display: block;
+  color: #fff2c2;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.team-stat-card small {
+  display: inline-block;
+  margin-top: 9px;
+  color: #f0c040;
+}
+
+.inventory-life-bar {
+  max-width: 360px;
+}
+
+.team-status-panel.status-updated .team-stat-card {
+  transform: translateY(-2px);
+  border-color: rgba(178, 242, 187, 0.58);
+  box-shadow: 0 0 26px rgba(47, 158, 68, 0.24);
+}
+
+@media (max-width: 720px) {
+  .team-status-panel {
+    grid-template-columns: 1fr;
+  }
+}
