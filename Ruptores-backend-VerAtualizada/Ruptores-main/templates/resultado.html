@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruptores — Resultado</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="inventario-body">
+  <main class="inventory-shell">
+    <header class="inventory-header">
+      <div>
+        <p class="screen-kicker">Tela 7 — Resultado Final</p>
+        <h1>Missão Concluída</h1>
+      </div>
+      <div class="room-indicator">{{ score.estrelas }} ★</div>
+    </header>
+
+    <section class="inventory-list">
+      <article class="item-card inventory-item">
+        <div class="item-icon">⚡</div>
+        <div class="item-content">
+          <h2>Eficiência do Deck</h2>
+          <p>Seu deck foi comparado com a solução ótima do Knapsack.</p>
+          <span class="item-effect">{{ score.ef_knapsack }}%</span>
+        </div>
+      </article>
+      <article class="item-card inventory-item">
+        <div class="item-icon">🧭</div>
+        <div class="item-content">
+          <h2>Eficiência da Rota</h2>
+          <p>Sua rota foi comparada com a menor rota calculada pelo TSP.</p>
+          <span class="item-effect">{{ score.ef_tsp }}%</span>
+        </div>
+      </article>
+      <article class="item-card inventory-item">
+        <div class="item-icon">◆</div>
+        <div class="item-content">
+          <h2>Itens Coletados</h2>
+          <p>{{ inventario|length }} item(ns) no inventário.</p>
+          <span class="item-effect">{{ score.ef_inventario }}%</span>
+        </div>
+      </article>
+      <article class="item-card inventory-item">
+        <div class="item-icon">★</div>
+        <div class="item-content">
+          <h2>Score Final</h2>
+          <p>Resultado geral da missão.</p>
+          <span class="item-effect">{{ score.score_final }} pontos</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="inventory-feedback">
+      <strong>Deck escolhido:</strong> {{ deck_jogador|map(attribute='nome')|join(', ') or 'nenhum' }}<br>
+      <strong>Deck ótimo:</strong> {{ deck_otimo|map(attribute='nome')|join(', ') or 'não calculado' }}<br>
+      <strong>Rota escolhida:</strong> {{ rota_jogador|join(' → ') or 'nenhuma' }}<br>
+      <strong>Rota ótima:</strong> {{ rota_otima|join(' → ') or 'não calculada' }}
+    </section>
+
+    <footer class="inventory-footer">
+      <a class="secondary-action" href="/deck">Jogar novamente</a>
+      <a class="primary-action" href="/">Voltar ao menu</a>
+    </footer>
+  </main>
+</body>
+</html>
