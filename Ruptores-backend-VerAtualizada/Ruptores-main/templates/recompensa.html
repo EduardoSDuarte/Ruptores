@@ -1,0 +1,54 @@
+{% set sala_numero = sala_numero|default(1) %}
+{% set total_salas = total_salas|default(5) %}
+{% set item = item|default({'id': 'cristal-energetico', 'nome': 'Cristal Energético', 'descricao': 'Aumenta o dano total do time em 5%.', 'efeito': '+5% de dano'}, true) %}
+{% set tem_proxima_sala = tem_proxima_sala|default(true) %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruptores — Recompensa</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="recompensa-body">
+
+  <main class="reward-shell">
+    <section class="reward-card" id="reward-card">
+      <p class="screen-kicker">Tela 5 — Recompensa e Coleta</p>
+      <h1>Sala Concluída!</h1>
+      <p class="room-indicator reward-room">Sala {{ sala_numero }} de {{ total_salas }}</p>
+
+      <div class="item-glow" aria-hidden="true">✦</div>
+      <h2>Item Encontrado</h2>
+      <article class="item-card featured-item">
+        <div class="item-icon">◆</div>
+        <div>
+          <h3>{{ item.nome }}</h3>
+          <p>{{ item.descricao }}</p>
+          <span class="item-effect">{{ item.efeito }}</span>
+        </div>
+      </article>
+
+      <p class="reward-feedback" id="reward-feedback">
+        Colete o item e abra o inventário antes de seguir para a próxima batalha.
+      </p>
+
+      <div class="reward-actions">
+        <button type="button" class="primary-action button-reset" id="collect-item-btn">Coletar item</button>
+        <a class="secondary-action disabled-link" id="continue-link" href="/inventario">Abrir inventário</a>
+        {% if tem_proxima_sala %}
+        <a class="secondary-action" href="/batalha">Pular inventário</a>
+        {% endif %}
+      </div>
+    </section>
+  </main>
+
+  <script>
+    window.RECOMPENSA_DADOS = {
+      item: {{ item|tojson }},
+      proximaUrl: "/inventario"
+    };
+  </script>
+  <script src="{{ url_for('static', filename='js/inventario.js') }}"></script>
+</body>
+</html>
